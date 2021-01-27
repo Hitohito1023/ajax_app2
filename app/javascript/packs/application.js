@@ -16,17 +16,24 @@ require('jquery')
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-$(function () {
-  $('.js-text_field').on('keyup', function () {
-    var title = $.trim($(this).val());
+$(document).on('turbolinks:load', function () {
+  $(function () {
+    $('.js-text_field').on('keyup', function () {
+      var title = $.trim($(this).val());
 
-    $.ajax({
-      type: 'Get',
-      url: '/messages/searches',
-      data: { title: title },
-      dataType: 'json'
-    })
-
+      $.ajax({
+        type: 'Get',
+        url: '/messages/searches',
+        data: { title: title },
+        dataType: 'json'
+      })
+      .done(function (data) {
+        $('.js-messages li').remove();
+        $(data).each(function (i, message) {
+          $('.js-messages').append(`<li class="message"><a href="/messages/${message.id}">${message.title}</a></li>`);
+        });
+      })
+    });
   });
 });
 
