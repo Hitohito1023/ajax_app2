@@ -15,3 +15,23 @@ require('jquery')
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+$(function () {
+  $('.js-text_field').on('keyup', function () {
+    var title = $.trim($(this).val());
+
+    $.ajax({
+      type: 'Get',
+      url: '/messages/searches',
+      data: { title: title },
+      dataType: 'json'
+    })
+
+  });
+});
+
+// $(function () {
+//   $('.js-text_field').on('keyup', function () {
+//     console.log("キーボードを入力した時に発生");
+//   })
+// });
